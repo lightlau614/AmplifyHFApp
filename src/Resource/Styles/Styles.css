@@ -1,0 +1,39 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+html, body{
+    height: 100%;
+}
+
+.App {
+    text-align: center;
+    height: 100%;
+}
+
+.Loading {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+.item_info img{
+    width: 320px;
+}
+
+.container{
+    margin-top: 20px;
+}
+
+.preview{
+    padding: 5%;
+}
+
+.preview img{
+    width: 100%;
+}
+
+.preview-sm-pic{
+    margin: 5% 0;
+}
+
+.preview-sm-pic img{
+    width: 100%;
+}
