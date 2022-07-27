@@ -63,12 +63,12 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                     <div className='row'>
                                         <div className='col'>
                                             <div className='preview'>
-                                                <img className='mx-auto d-block' src={Record.image_list_on_S3[0]?Record.image_list_on_S3[0]:Record.image_list_from_source} />
+                                                <img className='mx-auto d-block' src={Record.image_list_on_S3?Record.image_list_on_S3[0]:Record.image_list_from_source} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className='row'>
-                                    {Record.image_list_on_S3.map((img:any ,index: any)=>{
+                                    {Record.image_list_on_S3?Record.image_list_on_S3.map((img:any ,index: any)=>{
                                         return(
                                             <div className='col-sm-3'>
                                                 <div key={index} className='preview-sm-pic'>
@@ -76,7 +76,7 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                                 </div>
                                             </div>    
                                         )
-                                    })}
+                                    }):''}
                                     </div>
                                 </div>
                                 <div className='col'>

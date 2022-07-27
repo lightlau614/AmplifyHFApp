@@ -2,11 +2,13 @@
 import React from 'react';
 
 interface Props {
-  data: Object[],
+  data: any,
   passDialog:Function
 }
 
 const Box:any = ( { data, passDialog } : Props ) => {
+
+  let box_data = data;
 
   const handleClick = async ( event:any ) => {
     passDialog(event.target.alt)
@@ -18,7 +20,7 @@ const Box:any = ( { data, passDialog } : Props ) => {
           <div className="item_info container">
             <div className='row'>
               <div className='col'>
-                <img alt={el._id} src={el.image_list_on_S3[0]? el.image_list_on_S3[0]: el.image_list_from_source} onClick={handleClick} />
+                <img alt={el._id} src={el.image_list_on_S3? el.image_list_on_S3[0]: el.image_list_from_source} onClick={handleClick} />
               </div>
             </div>
             <div className='row'>

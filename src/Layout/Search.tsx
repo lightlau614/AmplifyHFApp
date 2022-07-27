@@ -11,7 +11,7 @@ const Search = () => {
 
     const [ error, setError ] =useState<boolean>(false);
     const [ data, setData ] = useState<any>();
-    const [ url, setUrl ] = useState<string>('https://vzbti50uh6.execute-api.ap-southeast-1.amazonaws.com/default/lambda-mongo-function');
+    const [ url, setUrl ] = useState<string>('https://xnsu2dpmhg.execute-api.ap-southeast-1.amazonaws.com/dev');
 
     const [ skip , setSkip ] = useState<number>(50);
     const [ count , setCount] = useState<any>(0);
@@ -27,21 +27,23 @@ const Search = () => {
     //function to fetch data
     const fetch = useCallback( async () =>{    
         setError(false);
-        try {
-            const data = await axios.get(url);
-            setData(data.data);
-        } catch {
-          setError(true);
+        if(count == 0){
+            try {
+                const data = await axios.get(url);
+                setData(data.data.body);
+                setCount(1);
+            } catch {
+                setError(true);
+            }
         }
     },[url]);
 
     useEffect(() => {
         fetch();
-
         //Window Scroll
         // setY(window.scrollY);
         
-    },[data]);
+    },[]);
 
     if(!data){
         return (
