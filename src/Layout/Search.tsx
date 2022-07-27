@@ -38,12 +38,50 @@ const Search = () => {
         }
     },[url]);
 
+    const HandleNavigation = useCallback( 
+        async ( e:any ) => {
+
+            const window = e.currentTarget;
+            let lastScrollY = window.pageYOffset;
+            let sbHeight = window.innerHeight * (window.innerHeight / document.body.offsetHeight) / 0.95;
+
+            if( y < window.scrollY ) {              
+                const scrollY = window.pageYoffset;
+                if ( ref.current ) {
+                    if ( ( ref.current.clientHeight - lastScrollY ) < sbHeight ) {
+                        window.removeEventListener( "scroll", HandleNavigation );
+                        setSkip(skip+50);
+                        if ( url.includes('?') ) {
+                            const predata = await axios.get( url + '&skip=' + skip );
+                            for( let x = 0; x < predata.data.body.length; x++ ) {
+                                data.push(predata.data.body[x]);
+                            }
+                        }else{
+                            const predata = await axios.get( url + '?skip=' + skip );
+                            for( let x = 0; x < predata.data.body.length; x++ ) {
+                                data.push(predata.data.body[x]);
+                            }
+                        }
+                    }
+                }
+            }
+            setY(window.scrollY);
+        },[y]
+    )
+
     useEffect(() => {
         fetch();
         //Window Scroll
-        // setY(window.scrollY);
+        setY(window.scrollY);
         
     },[]);
+
+    useEffect(() => {
+        window.addEventListener( "scroll", HandleNavigation );
+        return () => {
+            window.removeEventListener( "scroll", HandleNavigation );
+        }
+    },[y])
 
     if(!data){
         return (
