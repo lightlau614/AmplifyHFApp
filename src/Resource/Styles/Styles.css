@@ -24,6 +24,7 @@ html, body{
 
 .preview{
     padding: 5%;
+    width: calc(100%/1.5);
 }
 
 .preview img{

@@ -14,6 +14,8 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
 
     const [ count , setCount ] = useState<number>(0);
 
+    const [ imgSrc, setimgsrc ] = useState<string>('');
+
     const descriptionElementRef = useRef<HTMLElement>(null);
 
     const handleClose= () => {
@@ -30,15 +32,21 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
     }
 
     useEffect(()=>{
+
         if(open){
             const { current: descriptionElement } = descriptionElementRef;
             if (descriptionElement !== null) {
                 descriptionElement.focus();
             }
+            setimgsrc(dialogData[0].image_list_on_S3?dialogData[0].image_list_on_S3[0]:dialogData[0].image_list_from_source)
         }
     },[open]);
 
-    console.log(dialogData);
+    const handleMouseOver = ( e:any ) => {
+        
+        setimgsrc(e.target.currentSrc);
+
+    }
 
     return dialogData?dialogData.map( (Record:any, index:any) => (
         <>
@@ -63,9 +71,10 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                             <div className='row'>
                                 <div className='col'>
                                     <div className='row'>
-                                        <div className='col'>
+                                        <div className='col d-flex align-items-center justify-content-center'>
                                             <div className='preview'>
-                                                <img className='mx-auto d-block' src={Record.image_list_on_S3?Record.image_list_on_S3[0]:Record.image_list_from_source} />
+                                                {/* <img className='mx-auto d-block' src={Record.image_list_on_S3?Record.image_list_on_S3[0]:Record.image_list_from_source} /> */}
+                                                <img className='mx-auto d-block' src={imgSrc} />
                                             </div>
                                         </div>
                                     </div>
@@ -74,7 +83,7 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                         return(
                                             <div className='col-sm-3'>
                                                 <div key={index} className='preview-sm-pic'>
-                                                <img src={img} />
+                                                <img src={img} onMouseMove={handleMouseOver}/>
                                                 </div>
                                             </div>    
                                         )
