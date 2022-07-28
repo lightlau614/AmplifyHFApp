@@ -38,6 +38,8 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
         }
     },[open]);
 
+    console.log(dialogData);
+
     return dialogData?dialogData.map( (Record:any, index:any) => (
         <>
             <Dialog
@@ -88,6 +90,7 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                         {Record.brand}
                                     </div>
                                     </div>
+                                    {Record.material?'yes':'no'}
                                     <div className='row'>
                                     <div className='col'>
                                         Gender
@@ -104,7 +107,7 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                         {Record.product_type}
                                     </div>
                                     </div>
-                                    {Record.color?
+                                    {Record.color?(
                                     <div className='row'>
                                     <div className='col'>
                                         Color
@@ -112,17 +115,17 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                     <div className='col'>
                                         {Record.color}
                                     </div>
-                                    </div>:''} 
-                                    {Record.material?
+                                    </div>):''} 
+                                    {Record.material?(
                                     <div className='row'>
-                                    <div className='col'>
-                                        Material
-                                    </div>
-                                    <div className='col'>
-                                        {Record.material}
-                                    </div>
-                                    </div>:''}
-                                    {Record.tags.length>0?
+                                        <div className='col'>
+                                            Material
+                                        </div>
+                                        <div className='col'>
+                                            {Record.material}
+                                        </div>
+                                    </div>):''}
+                                    {Record.tags?
                                     <div className='row'>
                                     <div className='col'>
                                         Tags
@@ -141,7 +144,7 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                     </div>:''}
                                 </div>
                             </div>
-                            {Record.unstructured_info?
+                            {Record.unstructured_info?(
                             <div>
                                 <div className='row'>
                                     <div className='col'>
@@ -153,7 +156,7 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                     {Record.unstructured_info}
                                     </div>
                                 </div>
-                            </div>:''}
+                            </div>):''}
                         </div>
                     </DialogContentText>
                 </DialogContent>

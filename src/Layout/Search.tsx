@@ -4,6 +4,7 @@ import axios from 'axios';
 //Components
 import Box from "../Components/Box";
 import DialogBox from "../Components/DialogBox";
+import SearchForm from "../Components/SearchForm";
 
 import Loading from "../Resource/images/Spinner-1s-200px.svg";
 
@@ -11,7 +12,7 @@ const Search = () => {
 
     const [ error, setError ] =useState<boolean>(false);
     const [ data, setData ] = useState<any>();
-    const [ url, setUrl ] = useState<string>('https://xnsu2dpmhg.execute-api.ap-southeast-1.amazonaws.com/dev');
+    const [ url, setUrl ] = useState<string>('https://6corpcrbk3.execute-api.ap-southeast-1.amazonaws.com/dev');
 
     const [ skip , setSkip ] = useState<number>(50);
     const [ count , setCount] = useState<any>(0);
@@ -25,13 +26,13 @@ const Search = () => {
     const [y, setY] = useState(window.scrollY);
 
     //function to fetch data
-    const fetch = useCallback( async () =>{    
+    const fetch = useCallback( async () =>{   
         setError(false);
         if(count == 0){
             try {
                 const data = await axios.get(url);
                 setData(data.data.body);
-                setCount(1);
+                // setCount(1);
             } catch {
                 setError(true);
             }
@@ -73,7 +74,6 @@ const Search = () => {
         fetch();
         //Window Scroll
         setY(window.scrollY);
-        
     },[]);
 
     useEffect(() => {
@@ -95,6 +95,13 @@ const Search = () => {
         return <h2>Error fetching items</h2>
     }
 
+    const passSearch = async ( item:any ) => {
+        setCount(0);
+        setUrl(item);
+        const predata = await axios.get(item)
+        setData(predata.data.body)
+    }
+
     const passDialog = async ( item:any ) =>{
         const result = data.filter( (o:any) => o._id.includes(item));
         setDialogData(result);
@@ -108,7 +115,7 @@ const Search = () => {
     return (
         <>
             <div className="search_box container">
-                {/* <SearchForm passSearch={passSearch}/> */}
+                <SearchForm passSearch={passSearch} />
             </div>
             <div className="items row" ref={ref}>
                 <DialogBox dialogData={dialogData} diaOpen={diaOpen} returnDia={returnDia}/>
@@ -119,3 +126,6 @@ const Search = () => {
 };
 
 export default Search;
+
+
+
