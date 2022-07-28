@@ -39,7 +39,7 @@ html, body{
     width: 100%;
 }
 
-.css-1or64il-MuiButtonGroup-root .MuiButtonGroup-grouped:not(:last-of-type){
+.MuiButtonGroup-root > button{
     border-color: unset !important;
     border-right: unset !important;
 }
