@@ -43,9 +43,7 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
     },[open]);
 
     const handleMouseOver = ( e:any ) => {
-        
         setimgsrc(e.target.currentSrc);
-
     }
 
     return dialogData?dialogData.map( (Record:any, index:any) => (

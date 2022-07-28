@@ -127,10 +127,12 @@ const SearchForm = ( {passSearch}:any ) => {
                     </FormControl>
                 </Grid>
             </Grid>
-            <ButtonGroup variant="contained" aria-label="button group">
-                <Button onClick={onSubmit}>Search</Button>
-                <Button onClick={onReset}>Reset</Button>
-            </ButtonGroup>
+            <Grid container justifyContent="flex-end">
+                <ButtonGroup variant="text" aria-label="text button group" >
+                    <Button onClick={onSubmit}>Search</Button>
+                    <Button onClick={onReset}>Reset</Button>
+                </ButtonGroup>
+            </Grid>
         </div>
     );
 };
