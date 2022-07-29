@@ -17,7 +17,7 @@ const SearchForm = ( {passSearch}:any ) => {
     const fetch = async () =>{   
         setError(false);
         try {
-            const data = await axios.get('https://x6scnywi75.execute-api.ap-southeast-1.amazonaws.com/dev?group=brand');
+            const data = await axios.get('https://x6scnywi75.execute-api.ap-southeast-1.amazonaws.com/dev?brand=brand');
             setBrandList(data.data.body);
         } catch {
           setError(true);
@@ -81,7 +81,7 @@ const SearchForm = ( {passSearch}:any ) => {
                             >
                             <MenuItem value=''></MenuItem>
                             {brandlist && brandlist.map((item:any, index:any)=>{
-                                return <MenuItem key={index} value={item._id.group_item[0]}>{item._id.group_item[0]}</MenuItem>
+                                return <MenuItem key={index} value={item._id.brand}>{item._id.brand}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
