@@ -37,12 +37,13 @@ const SearchFImage = ( {imageResult} : Props ) => {
                             {size['height']} x {size['width']}
                         </div>
                    
+                        {imageResult.image_sizes?
                         <div>
                             Find other sizes of this image:
-                        </div>
-                        {imageResult.image_sizes.map((value:any) => {
+                        </div>:''}
+                        {imageResult.image_sizes?imageResult.image_sizes.map((value:any) => {
                             return <div><a href={value.link}>{value.title}</a></div>
-                        })}
+                        }):''}
                        
                     </div>
 
@@ -74,7 +75,7 @@ const SearchFImage = ( {imageResult} : Props ) => {
                                 :''}
                             </div>
                         ) 
-                    })}                    
+                    })}
                 </div>
             </div>
             :''}

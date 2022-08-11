@@ -112,11 +112,11 @@ const Search_eng = () => {
                 </Grid>
             </Grid>
             
-            {/* {fileupload?
+            {fileupload?
                 <SearchFImage imageResult={searchResult.data} />
                 :
                 <SearchFtext imageResult={searchResult.data}/>
-            } */}
+            }
         </div>
     );
 };
