@@ -23,12 +23,12 @@ const Search = () => {
 
     //Window Scroll
     const ref = useRef<HTMLDivElement>(null);
-    const [y, setY] = useState(window.scrollY);
+    const [ y, setY ] = useState(window.scrollY);
 
     //function to fetch data
     const fetch = useCallback( async () =>{   
         setError(false);
-        if(count == 0){
+        if( count == 0 ){
             try {
                 const data = await axios.get(url);
                 setData(data.data.body);
@@ -70,11 +70,11 @@ const Search = () => {
         },[y]
     )
 
-    useEffect(() => {
+    useEffect( () => {
         fetch();
         //Window Scroll
         setY(window.scrollY);
-    },[]);
+    },[] );
 
     useEffect(() => {
         window.addEventListener( "scroll", HandleNavigation );
@@ -83,7 +83,7 @@ const Search = () => {
         }
     },[y])
 
-    if(!data){
+    if( !data ){
         return (
             <div className="Loading-box h-100 d-flex align-items-center justify-content-center">
                 <img src={Loading} className="Loading" alt="Loading" />
@@ -91,7 +91,7 @@ const Search = () => {
         );
     }
         
-    if(error){
+    if( error ){
         return <h2>Error fetching items</h2>
     }
 
