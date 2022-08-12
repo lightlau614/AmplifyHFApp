@@ -41,14 +41,15 @@ const Search_eng = () => {
                             data: formData
                         });
         }else if(searchfile !== ''){
-            formData.append("keyword", searchfile);
-            location = await axios({
-                method: 'post',
-                headers: {'Content-Type': 'multipart/form-data'},
-                url: API_TEXT_URL,
-                data: formData
+            // formData.append('keyword', searchfile);
+            const params = JSON.stringify({
+                "keyword": searchfile
+                });
+
+            location = await axios.post(API_TEXT_URL, params, {      
+                headers: {'Content-Type': 'application/json'},
             });
-            // location = await axios.post(API_TEXT_URL, searchfile);
+            // location = await axios.get(API_TEXT_URL, searchfile);
         }
         setSearchResult(location);
     };
@@ -118,11 +119,11 @@ const Search_eng = () => {
                 </Grid>
             </Grid>
             
-            {/* {fileupload.length > 0 || searchfile !== '' ?
+            {fileupload.length > 0?
                 <SearchFImage imageResult={searchResult?searchResult.data:''} />
                 :
-                <SearchFtext imageResult={searchResult?searchResult.data:''}/>
-            } */}
+                <SearchFtext imageResult={searchResult?searchResult.data.body:''}/>
+            }
         </div>
     );
 };
