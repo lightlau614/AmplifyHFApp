@@ -17,6 +17,7 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import SearchIcon from '@mui/icons-material/Search';
 
 const API_URL = "https://yfvg5swaie.execute-api.ap-southeast-1.amazonaws.com/dev";
+const API_TEXT_URL = "https://shs8u30cxj.execute-api.ap-southeast-1.amazonaws.com/dev";
 
 const Search_eng = () => {
 
@@ -35,13 +36,19 @@ const Search_eng = () => {
             // location = await axios.post(API_URL, formData);
             location = await axios({
                             method: 'post',
-                            headers: {'Content-Type': 'form-data'},
+                            headers: {'Content-Type': 'multipart/form-data'},
                             url: API_URL,
                             data: formData
                         });
         }else if(searchfile !== ''){
-            formData.append("body", searchfile);
-            location = await axios.get(API_URL+ 'stext?text='+ searchfile);
+            formData.append("keyword", searchfile);
+            // location = await axios({
+            //     method: 'post',
+            //     headers: {'Content-Type': 'multipart/form-data'},
+            //     url: API_TEXT_URL,
+            //     data: formData
+            // });
+            location = await axios.post(API_TEXT_URL, searchfile);
         }
         setSearchResult(location);
     };
@@ -111,11 +118,11 @@ const Search_eng = () => {
                 </Grid>
             </Grid>
             
-            {fileupload.length > 0 || searchfile !== '' ?
+            {/* {fileupload.length > 0 || searchfile !== '' ?
                 <SearchFImage imageResult={searchResult?searchResult.data:''} />
                 :
                 <SearchFtext imageResult={searchResult?searchResult.data:''}/>
-            }
+            } */}
         </div>
     );
 };
