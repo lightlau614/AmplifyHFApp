@@ -7,7 +7,8 @@ interface Props{
 const SearchFtext = ( {imageResult} : Props ) => {
 
     return (
-        <>{imageResult?
+        <>
+        {imageResult?
         <div className='container'>
             <div className='row'>
                 {imageResult.images_results.map((value:any) => {
