@@ -42,13 +42,13 @@ const Search_eng = () => {
                         });
         }else if(searchfile !== ''){
             formData.append("keyword", searchfile);
-            // location = await axios({
-            //     method: 'post',
-            //     headers: {'Content-Type': 'multipart/form-data'},
-            //     url: API_TEXT_URL,
-            //     data: formData
-            // });
-            location = await axios.post(API_TEXT_URL, searchfile);
+            location = await axios({
+                method: 'post',
+                headers: {'Content-Type': 'multipart/form-data'},
+                url: API_TEXT_URL,
+                data: formData
+            });
+            // location = await axios.post(API_TEXT_URL, searchfile);
         }
         setSearchResult(location);
     };
