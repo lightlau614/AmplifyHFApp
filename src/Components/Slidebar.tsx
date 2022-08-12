@@ -2,8 +2,6 @@ import React from 'react';
 import { slide as Menu } from "react-burger-menu";
 import {
     BiHomeAlt,
-    BiUser,
-    BiMedal,
     BiLogInCircle,
     BiLogOutCircle,
     BiSearch
@@ -33,13 +31,13 @@ const Slidebar = ({ pageWrapId, outerContainerId, passLogin }: SidemenuProps ) =
             <BiHomeAlt />
             Home
           </a>
-          {localStorage.getItem('user')?
+          {/* {localStorage.getItem('user')? */}
           <a className="menu-item" href="/Search">
             <BiSearch />
             Search
           </a>
-          :''}
-          {!localStorage.getItem('user')?
+          {/* :''} */}
+          {/* {!localStorage.getItem('user')?
           <a className="menu-item" href="#" onClick={handleClick}>
             <BiLogInCircle />
             Log in
@@ -48,19 +46,7 @@ const Slidebar = ({ pageWrapId, outerContainerId, passLogin }: SidemenuProps ) =
           <a className="menu-item logout" onClick={handleSignOut}>
             <BiLogOutCircle />
             Log out
-          </a>}
-          {/* <a className="menu-item" href="/result">
-            <BiMedal />
-            Result
-          </a>
-          <a className="menu-item" href="/login">
-            <BiLogInCircle />
-            Log in
-          </a>
-          <a className="menu-item logout" href="/logout">
-            <BiLogOutCircle />
-            Log out
-          </a> */}
+          </a>} */}
         </Menu>
     );
 };

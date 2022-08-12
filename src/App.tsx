@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // Components
 import Search from "./Layout/Search";
 import Search_eng from "./Layout/Search_eng";
-// import Slidebar from "./Components/Slidebar";
+import Slidebar from "./Components/Slidebar";
 // import LoginBox from "./Components/LoginBox";
 
 //CSS
@@ -26,7 +26,7 @@ function App() {
     <Router>
         <div className="App">
             {/* <LoginBox logOpen={logOpen} returnLog={returnLog} /> */}
-            {/* <Slidebar pageWrapId={"page-wrap"} outerContainerId={"outer-container"} passLogin={passLogin}/> */}
+            <Slidebar pageWrapId={"page-wrap"} outerContainerId={"outer-container"} passLogin={passLogin}/>
             <div className="container">
               <Routes>
                   {/* <Route path="/upload" element={<Form />} /> */}
