@@ -29,7 +29,7 @@ const Search_eng = () => {
     const onSubmit = async () => {
         const formData = new FormData();
         let location;
-        if(fileupload !==''){
+        if(fileupload.length > 0){
             
             formData.append("file", fileupload[0]);        
             // location = await axios.post(API_URL, formData);
@@ -66,7 +66,7 @@ const Search_eng = () => {
         }
       };
 
-      console.log(searchResult)
+    //   console.log(searchResult)
 
     return (
         <div className="row">
@@ -90,7 +90,6 @@ const Search_eng = () => {
                                     <IconButton onClick={ () => {
                                         setSearchfile('');
                                         setFileUpload('');
-                                        setSearchResult('');
                                      }}>
                                         <ClearIcon />
                                     </IconButton>
@@ -112,10 +111,10 @@ const Search_eng = () => {
                 </Grid>
             </Grid>
             
-            {fileupload?
-                <SearchFImage imageResult={searchResult.data} />
+            {fileupload.length > 0 || searchfile !== '' ?
+                <SearchFImage imageResult={searchResult?searchResult.data:''} />
                 :
-                <SearchFtext imageResult={searchResult.data}/>
+                <SearchFtext imageResult={searchResult?searchResult.data:''}/>
             }
         </div>
     );
