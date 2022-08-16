@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Search from "./Layout/Search";
 import Search_eng from "./Layout/Search_eng";
 import Slidebar from "./Components/Slidebar";
-// import LoginBox from "./Components/LoginBox";
+import LoginBox from "./Components/LoginBox";
 
 //CSS
 import './Resource/Styles/Styles.css';
@@ -25,7 +25,7 @@ function App() {
   return (
     <Router>
         <div className="App">
-            {/* <LoginBox logOpen={logOpen} returnLog={returnLog} /> */}
+            <LoginBox logOpen={logOpen} returnLog={returnLog} />
             <Slidebar pageWrapId={"page-wrap"} outerContainerId={"outer-container"} passLogin={passLogin}/>
             <div className="container">
               <Routes>

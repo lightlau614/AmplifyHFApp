@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogProps, DialogTitle, Button } from '@mui/material';
 
+import TensorModel from './TensorModel';
+import classify, { ClassifyReturn } from '../helpers/classify';
+
 interface Props{
     dialogData: any,
     diaOpen: boolean,
@@ -11,11 +14,9 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
 
     const [open, setOpen] = useState<boolean>(false);
     const [scroll] = useState<DialogProps['scroll']>('paper');
-
     const [ count , setCount ] = useState<number>(0);
-
     const [ imgSrc, setimgsrc ] = useState<string>('');
-
+    const [ prediction, setPrediction ] = useState<ClassifyReturn | null>(null);
     const descriptionElementRef = useRef<HTMLElement>(null);
 
     const handleClose= () => {
@@ -34,6 +35,7 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
     useEffect(()=>{
 
         if(open){
+            setPrediction(null);
             const { current: descriptionElement } = descriptionElementRef;
             if (descriptionElement !== null) {
                 descriptionElement.focus();
@@ -44,6 +46,10 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
 
     const handleMouseOver = ( e:any ) => {
         setimgsrc(e.target.currentSrc);
+    }
+
+    const return_Pencent = async ( item:any ) => {
+        setPrediction(item);
     }
 
     return dialogData?dialogData.map( (Record:any, index:any) => (
@@ -72,7 +78,8 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                         <div className='col d-flex align-items-center justify-content-center'>
                                             <div className='preview'>
                                                 {/* <img className='mx-auto d-block' src={Record.image_list_on_S3?Record.image_list_on_S3[0]:Record.image_list_from_source} /> */}
-                                                <img className='mx-auto d-block' src={imgSrc} />
+                                                {/* <img className='mx-auto d-block' src={imgSrc} /> */}
+                                                <TensorModel imgPhoto={imgSrc} return_Pencent={return_Pencent}/>
                                             </div>
                                         </div>
                                     </div>
@@ -149,6 +156,29 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                     })}
                                     </div>
                                     </div>:''}
+                                    {prediction && prediction.length>0?(
+                                        <>
+                                            <div className='row'>
+                                                <div className='col'>
+                                                    Prediction:
+                                                </div>
+                                                <div className='col'>
+                                                    {prediction?prediction[0].className:''}
+                                                </div>
+                                            </div>
+                                            <div className='row'>
+                                                <div className='col'>
+                                                    Probability:
+                                                </div>
+                                                <div className='col'>
+                                                    {Math.floor(prediction?prediction[0].probability * 100:0)}%
+                                                </div>
+                                            </div>
+                                        </>
+                                    ):
+                                    <div>
+                                        no prediction
+                                    </div>}
                                 </div>
                             </div>
                             {Record.unstructured_info?(

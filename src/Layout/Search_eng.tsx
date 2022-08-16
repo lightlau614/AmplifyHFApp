@@ -74,8 +74,6 @@ const Search_eng = () => {
         }
       };
 
-    //   console.log(searchResult)
-
     return (
         <div className="row">
             <Grid container >
