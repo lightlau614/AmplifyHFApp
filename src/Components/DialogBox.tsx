@@ -1,23 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogProps, DialogTitle, Button } from '@mui/material';
-
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogProps, DialogTitle, Button, Paper, Typography } from '@mui/material';
 import TensorModel from './TensorModel';
+
 import classify, { ClassifyReturn } from '../helpers/classify';
 
 interface Props{
     dialogData: any,
     diaOpen: boolean,
-    returnDia: Function
+    returnDia: Function,
 }
 
 const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
 
     const [open, setOpen] = useState<boolean>(false);
     const [scroll] = useState<DialogProps['scroll']>('paper');
+
     const [ count , setCount ] = useState<number>(0);
+
     const [ imgSrc, setimgsrc ] = useState<string>('');
-    const [ prediction, setPrediction ] = useState<ClassifyReturn | null>(null);
+
     const descriptionElementRef = useRef<HTMLElement>(null);
+
+    const [prediction, setPrediction] = useState<ClassifyReturn | null>(
+        null
+    );
 
     const handleClose= () => {
         setOpen(false);
@@ -30,17 +36,16 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
             setCount(1);
             setOpen(true);
         }
-    }
-
+    }   
+    
     useEffect(()=>{
-
         if(open){
             setPrediction(null);
             const { current: descriptionElement } = descriptionElementRef;
             if (descriptionElement !== null) {
                 descriptionElement.focus();
             }
-            setimgsrc(dialogData[0].image_list_on_S3?dialogData[0].image_list_on_S3[0]:dialogData[0].image_list_from_source)
+            setimgsrc(dialogData[0].image_list_on_S3?dialogData[0].image_list_on_S3[0]:dialogData[0].image_list_from_source[0]);
         }
     },[open]);
 
@@ -48,7 +53,7 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
         setimgsrc(e.target.currentSrc);
     }
 
-    const return_Pencent = async ( item:any ) => {
+    const return_Pencent = async ( item: any) => {
         setPrediction(item);
     }
 
@@ -75,11 +80,9 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                             <div className='row'>
                                 <div className='col'>
                                     <div className='row'>
-                                        <div className='col d-flex align-items-center justify-content-center'>
+                                        <div className='col'>
                                             <div className='preview'>
-                                                {/* <img className='mx-auto d-block' src={Record.image_list_on_S3?Record.image_list_on_S3[0]:Record.image_list_from_source} /> */}
-                                                {/* <img className='mx-auto d-block' src={imgSrc} /> */}
-                                                <TensorModel imgPhoto={imgSrc} return_Pencent={return_Pencent}/>
+                                                <TensorModel imgPhoto={imgSrc} return_Pencent={return_Pencent} />                                                
                                             </div>
                                         </div>
                                     </div>
@@ -97,40 +100,39 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                 </div>
                                 <div className='col'>
                                     <div className='row'>
-                                    <div className='col'>
-                                        Brand
-                                    </div>
-                                    <div className='col'>
-                                        {Record.brand}
-                                    </div>
-                                    </div>
-                                    {Record.material?'yes':'no'}
-                                    <div className='row'>
-                                    <div className='col'>
-                                        Gender
-                                    </div>
-                                    <div className='col'>
-                                        {Record.gender}
-                                    </div>
+                                        <div className='col'>
+                                            Brand
+                                        </div>
+                                        <div className='col'>
+                                            {Record.brand}
+                                        </div>
                                     </div>
                                     <div className='row'>
-                                    <div className='col'>
-                                        Product Type
+                                        <div className='col'>
+                                            Gender
+                                        </div>
+                                        <div className='col'>
+                                            {Record.gender}
+                                        </div>
                                     </div>
-                                    <div className='col'>
-                                        {Record.product_type}
-                                    </div>
-                                    </div>
-                                    {Record.color?(
                                     <div className='row'>
-                                    <div className='col'>
-                                        Color
+                                        <div className='col'>
+                                            Product Type
+                                        </div>
+                                        <div className='col'>
+                                            {Record.product_type}
+                                        </div>
                                     </div>
-                                    <div className='col'>
-                                        {Record.color}
-                                    </div>
-                                    </div>):''} 
-                                    {Record.material?(
+                                    {Record.color && Record.color?
+                                    <div className='row'>
+                                        <div className='col'>
+                                            Color
+                                        </div>
+                                        <div className='col'>
+                                            {Record.color}
+                                        </div>
+                                    </div>:''} 
+                                    {Record.material && Record.material?(
                                     <div className='row'>
                                         <div className='col'>
                                             Material
@@ -138,50 +140,56 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                         <div className='col'>
                                             {Record.material}
                                         </div>
-                                    </div>):''}
-                                    {Record.tags?
-                                    <div className='row'>
-                                    <div className='col'>
-                                        Tags
                                     </div>
-                                    <div className='col'>
-                                    {Record.tags.map((tag:any ,index: any)=>{
-                                        return(
-                                        <div className='row'>
-                                            <div key={index} className='col'>
-                                            {tag}
-                                            </div>
-                                        </div>    
-                                        )
-                                    })}
-                                    </div>
-                                    </div>:''}
-                                    {prediction && prediction.length>0?(
+                                    ):''}
+                                    {Record.tags && Record.tags.length>0?(
                                         <>
                                             <div className='row'>
                                                 <div className='col'>
-                                                    Prediction:
+                                                    Tags
                                                 </div>
                                                 <div className='col'>
-                                                    {prediction?prediction[0].className:''}
-                                                </div>
-                                            </div>
-                                            <div className='row'>
-                                                <div className='col'>
-                                                    Probability:
-                                                </div>
-                                                <div className='col'>
-                                                    {Math.floor(prediction?prediction[0].probability * 100:0)}%
+                                                {Record.tags.map((tag:any ,index: any)=>{
+                                                    return(
+                                                        <>
+                                                            <div className='row'>
+                                                                <div key={index} className='col'>
+                                                                {tag}
+                                                                </div>
+                                                            </div>  
+                                                        </>  
+                                                    )
+                                                })}
                                                 </div>
                                             </div>
                                         </>
-                                    ):
-                                    <div>
-                                        no prediction
-                                    </div>}
+                                    ):''}
+                                    {prediction && prediction.length>0?(
+                                        <>
+                                        <div className='row'>
+                                            <div className='col'>
+                                                Prediction:
+                                            </div>
+                                            <div className='col'>
+                                                {prediction?prediction[0].className:''}
+                                            </div>        
+                                        </div>
+                                        <div className='row'>
+                                            <div className='col'>
+                                            Probability:
+                                            </div>
+                                            <div className='col'>
+                                            {Math.floor(prediction?prediction[0].probability * 100:0)}%
+                                            </div>
+                                        </div>
+                                        </>
+                                         ):
+                                        <div>
+                                            no prediction
+                                        </div>}
                                 </div>
                             </div>
-                            {Record.unstructured_info?(
+                            {Record.unstructured_info?
                             <div>
                                 <div className='row'>
                                     <div className='col'>
@@ -193,7 +201,8 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                     {Record.unstructured_info}
                                     </div>
                                 </div>
-                            </div>):''}
+                            </div>:''}
+                            
                         </div>
                     </DialogContentText>
                 </DialogContent>

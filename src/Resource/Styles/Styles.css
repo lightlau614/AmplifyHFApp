@@ -5,8 +5,9 @@ html, body{
 }
 
 .App {
-    text-align: center;
+    /* text-align: center; */
     height: 100%;
+    min-width: 480px;
 }
 
 .Loading {
@@ -20,6 +21,16 @@ html, body{
 
 .container{
     padding-top: 20px;
+}
+
+.onTop{
+  position: fixed;
+  background: #FFF;
+  top: 0;
+}
+
+.topBody{
+  margin-top:160px !important;
 }
 
 .preview{
@@ -44,12 +55,113 @@ html, body{
     border-right: unset !important;
 }
 
-.search_source{
+.search_source_area, .search_source{
     width: 30%;
+}
+
+.each_result{
+  padding: 1% 0;
 }
 
 .search_source * {
     width: 100%;
+}
+
+
+.font12 {
+  font-size: 12px;
+}
+
+.font14 {
+  font-size: 14px;
+}
+
+.sim_pic *{
+  padding: unset;
+}
+
+.row {
+  margin: unset;
+}
+
+/*.each_photo_area{
+   max-height: 250px;
+   max-width: 250px; 
+}*/
+
+/*.each_photo_area div{
+   position: relative; 
+}*/
+
+/*.each_photo_area img{
+   height: 100%; 
+}*/
+
+.p1{
+  padding: 1%;
+}
+
+.mwp-250{
+  max-width: 250px;
+}
+
+.mhp-250{
+  max-height: 250px;
+}
+
+.mhp-250 > div{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wp-250{
+  width: 250px;
+}
+
+.hp-250{
+  height: 250px;
+}
+
+.wp-200{
+  width: 200px;
+}
+
+.hp-200{
+  height: 200px;
+}
+
+.bg-grey{
+  background: #bdc3c7;
+}
+
+.p-relative{
+  position: relative;
+}
+
+.img-vhcenter{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dc{
+  display: contents;
+}
+
+.mlr-25{
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.m5{
+  margin: 5px;
+}
+
+a {
+  text-decoration: none;
 }
 
 /*humburger menu*/
@@ -88,7 +200,7 @@ html, body{
   Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
   */
   .bm-menu-wrap {
-    position: fixed;
+    /* position: fixed; */
     height: 100%;
   }
   
@@ -145,4 +257,18 @@ html, body{
     margin-top: auto;
     border-top: 3px solid #808080;
     padding-top: 15px;
+  }
+
+  @media only screen and (max-width:900px) {
+    .topBody{
+      margin-top: 230px !important;
+    }
+  }
+  
+  @media only screen and (max-width:580px ) { 
+    .bm-burger-button{
+      width: 25px;
+      height: 25px;
+      left: 20px;
+    }
   }

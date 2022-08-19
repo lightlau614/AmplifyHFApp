@@ -15,9 +15,6 @@ export default function TensorModel ( { imgPhoto, return_Pencent }:Props,  /*, {
   const imgRef = useRef<HTMLImageElement>(null!);
 
   const [imgLoaded, setImgLoad] = useState<boolean>(false);
-  const [prediction, setPrediction] = useState<ClassifyReturn | null>(
-      null
-  );
 
   const handleImgLoad = () => setImgLoad(true);
 

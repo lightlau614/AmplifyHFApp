@@ -24,6 +24,10 @@ const SearchForm = ( {passSearch}:any ) => {
         }
     };
 
+    if(error){
+        return <h2>Error fetching items</h2>
+    }
+
     const handleSearch = async ( param1: any, param2: any, param3: any) =>{
 
         let search_box = null;
@@ -64,14 +68,10 @@ const SearchForm = ( {passSearch}:any ) => {
         fetch();
     },[]);
 
-    if(error){
-        return <></>;
-    }
-
     return (
-        <div className="row">
-            <Grid container >
-                <Grid item xs={9}>
+        <div className="row justify-content-center">
+            <Grid container spacing={4} className="search_area">
+                <Grid item xs={9} md={8}>
                     <FormControl fullWidth>
                         <InputLabel id="brand-label">Brand</InputLabel>
                         <Select 
@@ -86,7 +86,7 @@ const SearchForm = ( {passSearch}:any ) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={3} md={4}>
                     <FormControl fullWidth>
                         <FormLabel id="gender-label">Gender</FormLabel>
                         <RadioGroup 
@@ -102,39 +102,42 @@ const SearchForm = ( {passSearch}:any ) => {
                         </RadioGroup>
                     </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+        </Grid>
+        <Grid container className="search_area">
+                <Grid item xs={12} spacing={0}>
                     <FormControl fullWidth>
                         <TextField 
-                                    fullWidth label="Tags"
-                                    name="Tags" 
-                                    variant="standard"
-                                    value={tags}
-                                    onKeyDown={(e) =>{
-                                            if(e.key === 'Enter')   {
-                                                onSubmit();
-                                            }
-                                        }
-                                    } 
-                                    onChange={(e) => {setTags(e.target.value)}}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <IconButton onClick={()=>setTags('')}>
-                                                <ClearIcon />
-                                            </IconButton>
-                                        )
-                                    }}
-                                    />
+                            fullWidth label="Tags"
+                            name="Tags" 
+                            variant="standard"
+                            value={tags}
+                            onKeyDown={(e) =>{
+                                    if(e.key === 'Enter')   {
+                                        onSubmit();
+                                    }
+                                }
+                            } 
+                            onChange={(e) => {setTags(e.target.value)}}
+                            InputProps={{
+                                endAdornment: (
+                                    <IconButton onClick={()=>setTags('')}>
+                                        <ClearIcon />
+                                    </IconButton>
+                                )
+                            }}
+                        />
                     </FormControl>
                 </Grid>
             </Grid>
             <Grid container justifyContent="flex-end">
-                <ButtonGroup variant="text" aria-label="text button group" >
+                <ButtonGroup variant="text" aria-label="text button group">
                     <Button onClick={onSubmit}>Search</Button>
                     <Button onClick={onReset}>Reset</Button>
                 </ButtonGroup>
             </Grid>
         </div>
     );
-};
+
+}
 
 export default SearchForm;
