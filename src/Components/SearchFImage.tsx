@@ -41,7 +41,7 @@ const SearchFImage = ( {imageResult} : Props ) => {
                             Find other sizes of this image:
                         </div>
                         <div className='row'>
-                        {imageResult.image_sizes.map((value:any) => {
+                        {imageResult.image_sizes && imageResult.image_sizes.map((value:any) => {
                             return <div className='col'><a href={value.link}>{value.title}</a></div>
                         })}
                        </div>
