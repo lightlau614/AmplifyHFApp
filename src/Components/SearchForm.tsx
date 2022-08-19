@@ -8,7 +8,7 @@ import ClearIcon  from '@mui/icons-material/Clear';
 const SearchForm = ( {passSearch}:any ) => {
 
     const [ error, setError ] = useState<boolean>(false);
-    const [ brand , setBrand ] = useState<any>();
+    const [ brand , setBrand ] = useState<string>('');
     const [ gender, setGender ] = useState<string>('');
     const [ tags, setTags ] = useState<string>('');
 
@@ -94,6 +94,7 @@ const SearchForm = ( {passSearch}:any ) => {
                             aria-labelledby="gender-label"
                             defaultValue={gender}
                             name="radio-buttons-group"
+                            value={gender}
                             onChange={ (e) => setGender(e.target.value)}
                         >
                             <FormControlLabel value="women" control={<Radio />} label="Female" />
