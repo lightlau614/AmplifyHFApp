@@ -4,19 +4,25 @@ import {
     BiHomeAlt,
     BiLogInCircle,
     BiLogOutCircle,
-    BiSearch
+    BiSearch,
+    BiUserPlus
   } from "react-icons/bi";
 
 type SidemenuProps = {
     pageWrapId: string;
     outerContainerId: string;
     passLogin: Function;
+    passCreate: Function;
   };
 
-const Slidebar = ({ pageWrapId, outerContainerId, passLogin }: SidemenuProps ) => {
+const Slidebar = ({ pageWrapId, outerContainerId, passLogin, passCreate }: SidemenuProps ) => {
 
   const handleClick = async ( event:any ) => {
     passLogin(event.target.alt)
+  }
+
+  const handleCreateClick = async ( event:any ) => {
+    passCreate(event.target.alt);
   }
 
   const handleSignOut = (event:any) => {
@@ -36,17 +42,25 @@ const Slidebar = ({ pageWrapId, outerContainerId, passLogin }: SidemenuProps ) =
             <BiSearch />
             Search
           </a>
-          {/* :''} */}
+          {/*:''}*/}
           {/* {!localStorage.getItem('user')?
           <a className="menu-item" href="#" onClick={handleClick}>
             <BiLogInCircle />
             Log in
           </a>
           :
-          <a className="menu-item logout" onClick={handleSignOut}>
-            <BiLogOutCircle />
-            Log out
-          </a>} */}
+          (
+            <>
+              <a className="menu-item" href="#" onClick={handleCreateClick}>
+                <BiUserPlus />
+                Create User
+              </a>
+              <a className="menu-item logout" onClick={handleSignOut}>
+                <BiLogOutCircle />
+                Log out
+              </a>
+            </>
+          )} */}
         </Menu>
     );
 };
