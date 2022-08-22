@@ -35,7 +35,6 @@ html, body{
 
 .preview{
     padding: 5%;
-    width: calc(100%/1.5);
 }
 
 .preview img{
@@ -50,7 +49,7 @@ html, body{
     width: 100%;
 }
 
-.MuiButtonGroup-root > button{
+.MuiButtonGroup-root > button {
     border-color: unset !important;
     border-right: unset !important;
 }
@@ -66,7 +65,6 @@ html, body{
 .search_source * {
     width: 100%;
 }
-
 
 .font12 {
   font-size: 12px;
@@ -164,6 +162,8 @@ a {
   text-decoration: none;
 }
 
+
+
 /*humburger menu*/
 
 .bm-burger-button {
@@ -259,16 +259,42 @@ a {
     padding-top: 15px;
   }
 
-  @media only screen and (max-width:900px) {
-    .topBody{
-      margin-top: 230px !important;
-    }
+@media only screen and (max-width:1420px) {
+  .bm-burger-button{
+    left: 20px;
   }
+}
+
+@media only screen and (max-width:1030px) {
+  .bm-burger-button{
+    width: 25px;
+    height: 25px;
+    left: 10px;
+  }
+}
   
-  @media only screen and (max-width:580px ) { 
-    .bm-burger-button{
-      width: 25px;
-      height: 25px;
-      left: 20px;
-    }
+@media only screen and (max-width:900px) {
+  .topBody{
+    margin-top: 230px !important;
   }
+}
+
+@media only screen and (max-width:580px ) { 
+  .bm-burger-button{
+    width: 25px;
+    height: 25px;
+    left: 20px;
+  }
+
+  .container{
+    padding-top: 70px;
+  }
+}
+
+@media only screen and (max-width:530px ){
+    .css-13i4rnv-MuiGrid-root{
+      flex-basis: 8.333333%;
+      flex-grow: 0;
+      max-width: 8.333333%;
+    }
+}
