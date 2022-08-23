@@ -9,7 +9,7 @@ import axios from 'axios';
 //Component Import
 import SearchFImage from '../Components/SearchFImage';
 import SearchFtext from '../Components/SearchFtext';
-
+import Loading from "../Resource/images/Spinner-1s-200px.svg";
 
 //Icon Import
 import ClearIcon from '@mui/icons-material/Clear';
@@ -21,13 +21,14 @@ const API_TEXT_URL = "https://shs8u30cxj.execute-api.ap-southeast-1.amazonaws.co
 
 const Search_eng = () => {
 
-
     const [ searchfile, setSearchfile ] = useState<string>('');
     const inputFile = useRef<HTMLInputElement>(null);
     const [ fileupload, setFileUpload ] = useState<any>('')
     const [ searchResult, setSearchResult ] = useState<any>('');
+    const [ openLoading, setOpenLoading ] = useState<boolean>(false);
 
     const onSubmit = async () => {
+        setOpenLoading(true);
         const formData = new FormData();
         let location;
         if(fileupload.length > 0){
@@ -49,9 +50,9 @@ const Search_eng = () => {
             location = await axios.post(API_TEXT_URL, params, {      
                 headers: {'Content-Type': 'application/json'},
             });
-            // location = await axios.get(API_TEXT_URL, searchfile);
         }
         setSearchResult(location);
+        setOpenLoading(false);
     };
 
     const handleInputImage = () => {
@@ -76,7 +77,7 @@ const Search_eng = () => {
 
     return (
         <div className="row">
-            <Grid container >
+            <Grid container justifyContent={'center'}>
                 <Grid item xs={10}>
                     <FormControl fullWidth>
                         <TextField 
@@ -96,6 +97,7 @@ const Search_eng = () => {
                                     <IconButton onClick={ () => {
                                         setSearchfile('');
                                         setFileUpload('');
+                                        setSearchResult('');
                                      }}>
                                         <ClearIcon />
                                     </IconButton>
@@ -104,24 +106,28 @@ const Search_eng = () => {
                         />
                     </FormControl>
                 </Grid>
-                <Grid item>
+                <Grid item xs={0}>
                     <IconButton >
                         <PhotoCameraIcon onClick={ handleInputImage } />
                     </IconButton>
                     <input name="file" ref={inputFile} type="file" onChange={handleFileUpload} hidden />
                 </Grid>
-                <Grid item>
+                <Grid item xs={0}>
                     <IconButton onClick={onSubmit}>
                         <SearchIcon />
                     </IconButton>
                 </Grid>
             </Grid>
+            {openLoading?
+                <div className="Loading-box h-100 d-flex align-items-center justify-content-center">
+                <img src={Loading} className="Loading" alt="Loading" />
+            </div>:(searchResult && searchResult.data && searchResult.data.message)?'Unfortunately Search has stopped working':''}
             
-            {fileupload.length > 0?
+            {!(searchResult && searchResult.data && searchResult.data.message)?fileupload.length > 0?
                 <SearchFImage imageResult={searchResult?searchResult.data:''} />
                 :
                 <SearchFtext imageResult={searchResult?searchResult.data.body:''}/>
-            }
+            :''}
         </div>
     );
 };

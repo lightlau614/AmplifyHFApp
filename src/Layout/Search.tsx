@@ -114,10 +114,10 @@ const Search = () => {
 
     return (
         <>
-            <div className="search_box container">
+            <div className="search_box container onTop">
                 <SearchForm passSearch={passSearch} />
             </div>
-            <div className="items row" ref={ref}>
+            <div className="items row topBody" ref={ref}>
                 <DialogBox dialogData={dialogData} diaOpen={diaOpen} returnDia={returnDia}/>
                 <Box data={data} passDialog={passDialog}/>
             </div>

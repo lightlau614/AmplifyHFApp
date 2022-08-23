@@ -46,10 +46,6 @@ const LoginBox = ( { logOpen, returnLog }:Props) => {
         setValues({...values, showPassword: !values.showPassword});
     }
 
-    const handleMouseDownPassword = ( event: React.MouseEvent<HTMLButtonElement> ) => {
-        event.preventDefault();
-    }
-
     if(logOpen){
         if(count === 0){
             setCount(1);
@@ -91,9 +87,12 @@ const LoginBox = ( { logOpen, returnLog }:Props) => {
 
     return (
         <>
-            <Dialog open={loginOpen} onClose={handleClose}>
+            <Dialog
+                open={loginOpen}
+                onClose={handleClose}
+            >
                 <form onSubmit={handleSubmit}>
-                    <DialogTitle>Login</DialogTitle >
+                    <DialogTitle>Login</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             <FormControl fullWidth>
@@ -120,7 +119,6 @@ const LoginBox = ( { logOpen, returnLog }:Props) => {
                                                 <IconButton
                                                     aria-label='toggle password visibility'
                                                     onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
                                                     edge="end"
                                                 >
                                                     {values.showPassword? <VisibilityOff />: <Visibility />}
