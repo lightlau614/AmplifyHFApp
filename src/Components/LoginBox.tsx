@@ -8,6 +8,7 @@ import AuthService from '../Services/auth.service';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { RepeatOneSharp } from '@mui/icons-material';
 
 interface Props{
     logOpen: boolean;
@@ -68,17 +69,20 @@ const LoginBox = ( { logOpen, returnLog }:Props) => {
         setMessage('');
         setLoading(true);
         AuthService.login(values.username, values.password).then(
-            () => {
-                navigate("/");
-                window.location.reload();
+            (response) => {
+                if(response.statusCode === 200 ) {
+                    navigate("/");
+                    window.location.reload();
+                    setLoading(false);
+                }else if (response.statusCode === 400){
+                    setMessage(response.body.message);
+                }
             },
             (error) => {
                 const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString;
-                setLoading(false)
                 setMessage(resMessage);
             }
         );
-        setLoading(false);
     }
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) =>{
