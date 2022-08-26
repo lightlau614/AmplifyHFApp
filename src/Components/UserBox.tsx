@@ -10,7 +10,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-const API_URL = "http://www.api_mongodb.com/";
+// const API_URL = "http://www.api_mongodb.com/";
+const API_URL = "https://wm1fd0m7t4.execute-api.ap-southeast-1.amazonaws.com/dev"
 
 interface Props{
     uOpen: boolean;
@@ -22,6 +23,7 @@ interface State{
     password: string;
     confirm: string;
     group: string;
+    token: any;
     showPassword: boolean;
     showComfirm: boolean;
 }
@@ -36,6 +38,7 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
         password: '',
         confirm: '',
         group: '',
+        token: '',
         showPassword: false,
         showComfirm:false
     });
@@ -56,8 +59,8 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
     const fetch = async () =>{   
         setError(false);
         try {
-            const data = await axios.get(API_URL +'login/group/');
-            setUserGroup(data.data);
+            const data = await axios.get(API_URL +'/user/group/');
+            setUserGroup(data.data.body);
         } catch {
           setError(true);
         }
@@ -100,14 +103,16 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
     const submit = async () => {
         if( userError === false && passError === false && conError === false && groupError === false ){
             try {
-                await axios.post(API_URL + "login/user", values)
+                await axios.post(API_URL + "/user/create", values)
                     .then((response)=>{
-                        if(response.statusText === 'OK'){
+                        // if(response.statusText === 'OK'){
+                        if(response.data.body.message === 'SUCCESS'){
                             setValues({
                                 username: '',
                                 password: '',
                                 confirm: '',
                                 group: '',
+                                token: '',
                                 showPassword: false,
                                 showComfirm:false
                             });
@@ -144,7 +149,11 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
         if(values.group === ''){
             setGroupError(true);
         }
+        if(sessionStorage.getItem('token')){
+            setValues({...values, ['token']: sessionStorage.getItem('token')});
+        }
         submit();
+        
     }
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) =>{
