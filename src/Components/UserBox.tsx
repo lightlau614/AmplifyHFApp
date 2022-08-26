@@ -82,9 +82,9 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
         }
     },[userOpen]);
 
-    useEffect( () => {
-        fetch();
-    },[])
+    // useEffect( () => {
+    //     fetch();
+    // },[]);
 
     const handleClose = () => {
         setUserOpen(false);
