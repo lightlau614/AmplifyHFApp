@@ -174,14 +174,14 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                                 {prediction?prediction[0].className:''}
                                             </div>        
                                         </div>
-                                        <div className='row'>
+                                        {/* <div className='row'>
                                             <div className='col'>
                                             Probability:
                                             </div>
                                             <div className='col'>
                                             {Math.floor(prediction?prediction[0].probability * 100:0)}%
                                             </div>
-                                        </div>
+                                        </div> */}
                                         </>
                                          ):
                                         <div>
