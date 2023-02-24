@@ -51,7 +51,7 @@ const Search_eng = () => {
                 location = await axios({
                                 method: 'post',
                                 headers: {'Content-Type': 'multipart/form-data'},
-                                url: F_API_URL+'/search',
+                                url: API_URL+'/search',
                                 data: formData
                             });
 
