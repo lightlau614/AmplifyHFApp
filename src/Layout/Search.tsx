@@ -8,11 +8,22 @@ import SearchForm from "../Components/SearchForm";
 
 import Loading from "../Resource/images/Spinner-1s-200px.svg";
 
+// const API = 'https://6corpcrbk3.execute-api.ap-southeast-1.amazonaws.com/dev';
+const API = 'https://wm1fd0m7t4.execute-api.ap-southeast-1.amazonaws.com/dev';
+
 const Search = () => {
 
     const [ error, setError ] =useState<boolean>(false);
     const [ data, setData ] = useState<any>();
-    const [ url, setUrl ] = useState<string>('https://6corpcrbk3.execute-api.ap-southeast-1.amazonaws.com/dev');
+    const [ url, setUrl ] = useState<string>(API);
+
+    const [ params, setParams ] = useState<any>({
+        brand: '',
+        gender: '',
+        tags: '',
+        sort: '',
+        skip: 50
+    });
 
     const [ skip , setSkip ] = useState<number>(50);
     const [ count , setCount] = useState<any>(0);
@@ -32,7 +43,6 @@ const Search = () => {
             try {
                 const data = await axios.get(url);
                 setData(data.data.body);
-                // setCount(1);
             } catch {
                 setError(true);
             }
@@ -63,6 +73,7 @@ const Search = () => {
                                 data.push(predata.data.body[x]);
                             }
                         }
+
                     }
                 }
             }
@@ -71,6 +82,7 @@ const Search = () => {
     )
 
     useEffect( () => {
+        // fetch(url, params);
         fetch();
         //Window Scroll
         setY(window.scrollY);

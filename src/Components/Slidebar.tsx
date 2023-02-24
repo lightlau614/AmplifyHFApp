@@ -18,7 +18,7 @@ type SidemenuProps = {
 const Slidebar = ({ pageWrapId, outerContainerId, passLogin, passCreate }: SidemenuProps ) => {
 
   const handleClick = async ( event:any ) => {
-    passLogin(event.target.alt)
+    passLogin(event.target.alt);
   }
 
   const handleCreateClick = async ( event:any ) => {
@@ -26,7 +26,11 @@ const Slidebar = ({ pageWrapId, outerContainerId, passLogin, passCreate }: Sidem
   }
 
   const handleSignOut = (event:any) => {
-    localStorage.removeItem('user')
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('group');
+    sessionStorage.removeItem('isSuccess');
+    sessionStorage.removeItem('token');
+    sessionStorage.clear();
     window.location.reload();
   }
 
@@ -37,24 +41,30 @@ const Slidebar = ({ pageWrapId, outerContainerId, passLogin, passCreate }: Sidem
             <BiHomeAlt />
             Home
           </a>
-          {/* {localStorage.getItem('user')? */}
-          <a className="menu-item" href="/Search">
-            <BiSearch />
-            Search
-          </a>
-          {/*:''}*/}
-          {/* {!localStorage.getItem('user')?
+          {/* {!sessionStorage.getItem('user') && !sessionStorage.getItem('token')?
           <a className="menu-item" href="#" onClick={handleClick}>
             <BiLogInCircle />
             Log in
           </a>
           :
           (
-            <>
-              <a className="menu-item" href="#" onClick={handleCreateClick}>
-                <BiUserPlus />
-                Create User
+            <> */}
+              <a className="menu-item" href="/Search">
+                <BiSearch />
+                Search
               </a>
+              {/* {sessionStorage.getItem('group') === 'administrator'?(
+                <>
+                  <a className="menu-item" href="#" onClick={handleCreateClick}>
+                    <BiUserPlus />
+                    Create User
+                  </a>
+                  <a className='menu-item' href='/userlist'>
+                    <BiUserPlus />
+                    User List
+                  </a>
+                </>
+              ):''}
               <a className="menu-item logout" onClick={handleSignOut}>
                 <BiLogOutCircle />
                 Log out

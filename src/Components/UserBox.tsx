@@ -10,15 +10,16 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-// const API_URL = "http://www.api_mongodb.com/";
 const API_URL = "https://wm1fd0m7t4.execute-api.ap-southeast-1.amazonaws.com/dev"
 
 interface Props{
     uOpen: boolean;
     reUser: Function;
+    stID: any;
 }
 
 interface State{
+    id: string;
     username: string;
     password: string;
     confirm: string;
@@ -28,12 +29,13 @@ interface State{
     showComfirm: boolean;
 }
 
-const UserBox = ( { uOpen, reUser }:Props) =>{
+const UserBox = ( { uOpen, reUser, stID }:Props) =>{
 
     const [userOpen, setUserOpen] = useState<boolean>(false);
     const [ error, setError ] = useState<boolean>(false);
     const [ count , setCount ] = useState<number>(0);
     const [ values, setValues ] = useState<State>({
+        id:'',
         username: '',
         password: '',
         confirm: '',
@@ -42,7 +44,7 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
         showPassword: false,
         showComfirm:false
     });
-    const [ loading, setLoading ] = useState<boolean>(false);
+
     const [ message, setMessage ] = useState<any>('');
     const [ usergroup, setUserGroup ] = useState<any>();
 
@@ -82,14 +84,70 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
         }
     },[userOpen]);
 
-    // useEffect( () => {
-    //     fetch();
-    // },[]);
+    useEffect( () => {
+        fetch();
+    },[]);
+
+    useEffect( () => {
+        if(stID !== ''){
+            getOneData(stID);
+        }
+    },[stID])
+
+    const getOneData = async (e:any) => {
+        console.log(e);
+        await axios.post(API_URL + "/user/create", {
+            id: e,
+            token: sessionStorage.getItem('token')
+        }).then((response) => {
+                setValues({
+                    id: response.data.body[0]._id,
+                    username: response.data.body[0].username,
+                    password: '',
+                    confirm: '',
+                    token:'',
+                    group: response.data.body[0].group,
+                    showPassword: false,
+                    showComfirm: false
+                });
+            }).catch(error =>{
+                setMessage(error);
+            });
+    };
 
     const handleClose = () => {
+        setValues({
+            id:'',
+            username: '',
+            password: '',
+            confirm: '',
+            group: '',
+            token: '',
+            showPassword: false,
+            showComfirm:false
+        });
         setUserOpen(false);
         setCount(0);
         reUser(false);
+        setUserError(false);
+        setPassError(false);
+        setConError(false);
+        setGroupError(false);
+    }
+
+    const handleDel = async (e:any) => {
+        await axios.delete(API_URL + "/user", {
+            data: { id: stID , token: sessionStorage.getItem('token')}}
+        ).then((response)=>{
+            if(response.data.body === 'SUCCESS'){
+                handleClose();
+            }else{
+                setMessage(response.data.body)
+            }
+            
+        }).catch(error =>{
+            setMessage(error);
+        });
     }
 
     const handleClickShowPassword = () => {
@@ -105,20 +163,8 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
             try {
                 await axios.post(API_URL + "/user/create", values)
                     .then((response)=>{
-                        // if(response.statusText === 'OK'){
-                        if(response.data.body.message === 'SUCCESS'){
-                            setValues({
-                                username: '',
-                                password: '',
-                                confirm: '',
-                                group: '',
-                                token: '',
-                                showPassword: false,
-                                showComfirm:false
-                            });
-                            setUserOpen(false);
-                            setCount(0);
-                            reUser(false);
+                        if(response.data.body.message === 'SUCCESS' || response.data.body.message.modifiedCount ){
+                            handleClose();
                         }else{
                             setMessage('This account already existed');
                         }
@@ -136,7 +182,7 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
         }else{
             setPassError(false);
         }
-        if(values.password !== values.confirm || values.confirm === ''){
+        if(values.password !== values.confirm){
             setConError(true);
         }else{
             setConError(false)
@@ -149,9 +195,13 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
         if(values.group === ''){
             setGroupError(true);
         }
+
         if(sessionStorage.getItem('token')){
-            setValues({...values, ['token']: sessionStorage.getItem('token')});
+            values['token'] = sessionStorage.getItem('token');
         }
+
+
+
         submit();
         
     }
@@ -181,9 +231,11 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
                                 <div>{message}</div>
                                 <TextField 
                                     error={userError===true}
+                                    disabled={stID?true:false}
                                     fullWidth label="Username"
                                     name="username" 
                                     variant="standard"
+                                    value={values.username}
                                     helperText={userError===true?"Please enter letter or Numer!":"Enter your username"}
                                     onChange={handleChange('username')}
                                 />
@@ -254,7 +306,8 @@ const UserBox = ( { uOpen, reUser }:Props) =>{
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Close</Button>
-                        <Button type="submit">Create</Button>
+                        {stID?<Button onClick={handleDel}>Delete</Button>:''}
+                        <Button type="submit">{!stID?'Create':'Submit'}</Button>
                     </DialogActions>
                 </form>
             </Dialog>

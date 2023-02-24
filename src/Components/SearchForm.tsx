@@ -5,6 +5,8 @@ import { Grid, TextField, Select, MenuItem, InputLabel, FormLabel,
     } from '@mui/material';
 import ClearIcon  from '@mui/icons-material/Clear';
 
+const API_URI = "https://wm1fd0m7t4.execute-api.ap-southeast-1.amazonaws.com/dev"
+
 const SearchForm = ( {passSearch}:any ) => {
 
     const [ error, setError ] = useState<boolean>(false);
@@ -17,12 +19,16 @@ const SearchForm = ( {passSearch}:any ) => {
     const fetch = async () =>{   
         setError(false);
         try {
-            const data = await axios.get('https://x6scnywi75.execute-api.ap-southeast-1.amazonaws.com/dev?brand=brand');
+            const data = await axios.get(API_URI + '/search/group?brand=brand');
             setBrandList(data.data.body);
         } catch {
           setError(true);
         }
     };
+
+    useEffect(() => {
+        fetch();
+    },[]);
 
     if(error){
         return <h2>Error fetching items</h2>
@@ -48,7 +54,7 @@ const SearchForm = ( {passSearch}:any ) => {
             search_box = search_box + '&tags=' + param3;
         }
 
-        var newUrl = 'https://6corpcrbk3.execute-api.ap-southeast-1.amazonaws.com/dev?'+search_box;
+        var newUrl = API_URI + '?'+search_box;
         passSearch(newUrl);
 
     };
@@ -61,12 +67,10 @@ const SearchForm = ( {passSearch}:any ) => {
         setBrand('');
         setGender('');
         setTags('');
-        passSearch('https://6corpcrbk3.execute-api.ap-southeast-1.amazonaws.com/dev');
+        passSearch(API_URI);
     }
 
-    useEffect(()=>{
-        fetch();
-    },[]);
+    
 
     return (
         <div className="row justify-content-center">
