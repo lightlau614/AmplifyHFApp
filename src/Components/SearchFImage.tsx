@@ -85,9 +85,9 @@ const SearchFImage = ( {imageResult} : Props ) => {
                         <h5><FiImage /> Visually Similar images</h5>
                     </div>
                     <div className='row sim_pic'>
-                        {imageResult.inline_images.map((value:any) => {
+                        {imageResult.inline_images?imageResult.inline_images.map((value:any) => {
                             return <div className='col-sm'><a href={value.link}><img src={value.thumbnail} /></a></div>
-                        })}
+                        }):''}
                     </div>
                 </div>
                 <div>
