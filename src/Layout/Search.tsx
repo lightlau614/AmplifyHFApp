@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, Suspense } from 'react';
 import axios from 'axios';
 
 //Components
 import Box from "../Components/Box";
-const DialogBox = React.lazy(() => import('../Components/DialogBox'));
+
 import SearchForm from "../Components/SearchForm";
 
 import Loading from "../Resource/images/Spinner-1s-200px.svg";
 
 // const API = 'https://6corpcrbk3.execute-api.ap-southeast-1.amazonaws.com/dev';
 const API = 'https://wm1fd0m7t4.execute-api.ap-southeast-1.amazonaws.com/dev';
+
+const DialogBox = React.lazy(() => import('../Components/DialogBox'));
 
 const Search = () => {
 
@@ -130,7 +132,9 @@ const Search = () => {
                 <SearchForm passSearch={passSearch} />
             </div>
             <div className="items row topBody" ref={ref}>
-                <DialogBox dialogData={dialogData} diaOpen={diaOpen} returnDia={returnDia}/>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <DialogBox dialogData={dialogData} diaOpen={diaOpen} returnDia={returnDia}/>
+                </Suspense>
                 <Box data={data} passDialog={passDialog}/>
             </div>
         </>
