@@ -3,7 +3,7 @@ import axios from 'axios';
 
 //Components
 import Box from "../Components/Box";
-import DialogBox from "../Components/DialogBox";
+const DialogBox = React.lazy(() => import('../Components/DialogBox'));
 import SearchForm from "../Components/SearchForm";
 
 import Loading from "../Resource/images/Spinner-1s-200px.svg";
