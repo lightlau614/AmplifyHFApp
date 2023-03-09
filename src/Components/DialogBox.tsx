@@ -164,6 +164,16 @@ const DialogBox = ( { dialogData, diaOpen, returnDia }:Props) =>{
                                             </div>
                                         </>
                                     ):''}
+                                    {Record.price && Record.price?
+                                    <div className='row'>
+                                        <div className='col'>
+                                            Price
+                                        </div>
+                                        <div className='col'>
+                                            HKD $ {Record.price}
+                                        </div>
+                                    </div>
+                                    :''}
                                     {prediction && prediction.length>0?(
                                         <>
                                         <div className='row'>
